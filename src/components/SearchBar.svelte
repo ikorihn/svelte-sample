@@ -1,9 +1,14 @@
 <script>
-  import App from '../App.svelte'
+  export let value = ''
 </script>
 
 <div class="shadow flex">
-  <input type="text" class="w-full rounded p-2" placeholder="Search..." />
+  <input
+    type="text"
+    class="w-full rounded p-2"
+    placeholder="Search..."
+    bind:value
+  />
   <button
     class="bg-white w-auto flex justify-end items-center text-blue-500 p-2 hover:text-blue-400"
   >
