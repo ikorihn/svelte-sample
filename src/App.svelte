@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Header from "./components/Header.svelte";
-  import Tailwindcss from "./Tailwindcss.svelte";
+  import Header from './components/Header.svelte'
+  import Tailwindcss from './Tailwindcss.svelte'
 
-  export let name: string;
+  export let name: string
 </script>
 
 <Tailwindcss />
