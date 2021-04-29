@@ -1,4 +1,5 @@
 <script lang="ts">
+  import BookCard from '../components/BookCard.svelte'
   import SearchBar from '../components/SearchBar.svelte'
   import type { BookItem } from '../repositories/book'
   import RepositoryFactory, { BOOK } from '../repositories/RepositoryFactory'
@@ -32,9 +33,11 @@
   {#if empty}
     <div>検索結果が見つかりません</div>
   {:else}
-    {#each books as book (book.id)}
-      <div>{book.volumeInfo.title}</div>
-    {/each}
+    <div class="grid grid-cols-1 gap-2 lg:grid-cols-2">
+      {#each books as book (book.id)}
+        <BookCard {book} />
+      {/each}
+    </div>
   {/if}
 
   {#await promise}
