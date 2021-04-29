@@ -9,9 +9,13 @@
 
   let q = 'Svelte'
   let empty = true
-  let books: BookItem[]
+  let books: BookItem[] = []
   let promise: Promise<void>
+
   let startIndex = 0
+  let totalItems = 0
+
+  $: hasMore = totalItems > books.length
 
   const handleSubmit = () => {
     if (!q.trim()) return
@@ -21,13 +25,16 @@
   const getBooks = async () => {
     books = []
     empty = false
+    startIndex = 0
     const result = await BookRepository.get({ q })
     empty = result.totalItems === 0
+    totalItems = result.totalItems
     books = result.items
   }
 
   const handleLoadMore = () => {
     startIndex += 10
+    promise = getNextBooks()
   }
 
   const getNextBooks = async () => {
@@ -37,7 +44,7 @@
     const filteredItems = result.items.filter(
       (item) => !bookIds.includes(item.id)
     )
-    books = [...books, filteredItems]
+    books = [...books, ...filteredItems]
   }
 </script>
 
@@ -54,7 +61,12 @@
         <BookCard {book} />
       {/each}
     </div>
-    <InfiniteScroll window on:loadMore={handleLoadMore} />
+    <InfiniteScroll
+      window
+      threshold={100}
+      on:loadMore={handleLoadMore}
+      {hasMore}
+    />
   {/if}
 
   {#await promise}
