@@ -3,6 +3,7 @@
   import SearchBar from '../components/SearchBar.svelte'
   import type { BookItem } from '../repositories/book'
   import RepositoryFactory, { BOOK } from '../repositories/RepositoryFactory'
+  import InfiniteScroll from 'svelte-infinite-scroll'
 
   const BookRepository = RepositoryFactory[BOOK]
 
@@ -10,6 +11,7 @@
   let empty = true
   let books: BookItem[]
   let promise: Promise<void>
+  let startIndex = 0
 
   const handleSubmit = () => {
     if (!q.trim()) return
@@ -22,6 +24,20 @@
     const result = await BookRepository.get({ q })
     empty = result.totalItems === 0
     books = result.items
+  }
+
+  const handleLoadMore = () => {
+    startIndex += 10
+  }
+
+  const getNextBooks = async () => {
+    const result = await BookRepository.get({ q, startIndex })
+
+    const bookIds = books.map((book) => book.id)
+    const filteredItems = result.items.filter(
+      (item) => !bookIds.includes(item.id)
+    )
+    books = [...books, filteredItems]
   }
 </script>
 
@@ -38,6 +54,7 @@
         <BookCard {book} />
       {/each}
     </div>
+    <InfiniteScroll window on:loadMore={handleLoadMore} />
   {/if}
 
   {#await promise}
