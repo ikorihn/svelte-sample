@@ -1,5 +1,7 @@
 *Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
+<https://zenn.dev/azukiazusa/books/9dac1257c77f47> のチュートリアルを実施
+
 ---
 
 # svelte-tailwindcss-template
