@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Readable } from 'svelte/store'
   import BookInfo from '../components/BookInfo.svelte'
+  import Spinner from '../components/Spinner.svelte'
   import type { BookItem } from '../repositories/book'
   import RepositoryFactory, { BOOK } from '../repositories/RepositoryFactory'
   import { books, find } from '../store/book'
@@ -26,7 +27,9 @@
 
 <div>
   {#await promise}
-    <div class="flex justify-center">loading...</div>
+    <div class="flex justify-center">
+      <Spinner />
+    </div>
   {:then}
     <BookInfo book={$book} />
   {:catch e}

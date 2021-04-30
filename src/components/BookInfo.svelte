@@ -32,7 +32,7 @@
           {book.volumeInfo.authors?.join(',')}
         </Row>
         <Row dt="概要">
-          {book.volumeInfo.description}
+          {@html book.volumeInfo.description}
         </Row>
         <Row dt="価格">
           {price}

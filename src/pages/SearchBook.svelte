@@ -5,6 +5,7 @@
   import RepositoryFactory, { BOOK } from '../repositories/RepositoryFactory'
   import InfiniteScroll from 'svelte-infinite-scroll'
   import { books } from '../store/book'
+  import Spinner from '../components/Spinner.svelte'
 
   const BookRepository = RepositoryFactory[BOOK]
 
@@ -70,7 +71,9 @@
   {/if}
 
   {#await promise}
-    <div>loading...</div>
+    <div class="flex justify-center">
+      <Spinner />
+    </div>
   {:catch e}
     <span class="text-red-600 text-sm">
       {e.message}
